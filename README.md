@@ -22,7 +22,10 @@ Coming soon to Chrome store. Load extension in unpacked form until then please!
 - Extract the files as a directory (folder)
 - Follow the instructions here to load the unpacked extension from the extracted directory [https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked)
 
+<br />
+<br />
+<br />
 
 # Testing credits
 Thanks people!
-1. Roshni
+1. Roshni Nayak
