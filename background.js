@@ -29,10 +29,7 @@ Change blur settings by opening the extension using the puzzle icon.
         let blurIntensity = 6;
         if (result.blurIntensity)
             blurIntensity = result.blurIntensity
-        blurDOM(blurIntensity)
-    })
 
-    function blurDOM(blurIntensity) {
         const existingStyleTag = document.querySelector('style[data-extension-styles]');
         const newStyles = `
                 .blur-element {
@@ -51,14 +48,27 @@ Change blur settings by opening the extension using the puzzle icon.
             style.setAttribute('data-extension-styles', ''); // Add a data attribute for identification
             document.head.appendChild(style);
         }
+
+        // Start blurring in response to various events
         document.addEventListener("mouseover", DocMouseOver);
-
         document.addEventListener("keydown", DocBlurKey)
-
         document.addEventListener("keydown", DocUnblurKey)
 
+        //Stop blurring in response to various events
         document.addEventListener("keydown", exitHoverMode)
-        document.addEventListener("contextmenu", clearHoverMode)
+        document.addEventListener("contextmenu", () => {
+            clearHoverMode()
+            return
+        })
+        chrome.storage.onChanged.addListener(function (changes, namespace) {
+            for (let key in changes) {
+                if (key === "blurIntensity") {
+                    clearHoverMode()
+                    return
+                }
+            }
+        });
+
 
 
         function DocMouseOver(event) {
@@ -79,7 +89,6 @@ Change blur settings by opening the extension using the puzzle icon.
         function DocBlurKey(event) {
             if (event.key === "b") {
                 const elementToLock = document.querySelector("[target-element='true']")
-                // elementToLock.setAttribute("is-blur-locked", "true")
                 elementToLock.classList.add("blur-element")
                 alert("Blur successfully locked, until next page refresh")
             }
@@ -88,7 +97,6 @@ Change blur settings by opening the extension using the puzzle icon.
         function DocUnblurKey(event) {
             if (event.key === "u") {
                 const elementToLock = document.querySelector("[target-element='true']")
-                // elementToLock.setAttribute("is-blur-locked", "false")
                 elementToLock.classList.remove("blur-element")
                 alert("Blur successfully unlocked, until next page refresh")
             }
@@ -102,12 +110,12 @@ Change blur settings by opening the extension using the puzzle icon.
             }
         }
 
-        function clearHoverMode(event) {
+        function clearHoverMode() {
             document.removeEventListener("mouseover", DocMouseOver)
             document.removeEventListener("keydown", DocBlurKey)
             document.removeEventListener("keydown", DocUnblurKey)
         }
-    }
+    })
 }
 
 
