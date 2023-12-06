@@ -1,5 +1,6 @@
 # Easy Blur
 Blur confidential or sensitive parts of a web page, before taking a screenshot or a screen recording, with Easy Blur chrome extension. Save hours in photo or video editing!
+
 keywords: `blur-video`, `blur-photo`, `video-editing`, `photo-editing`, `post-processing`
 <br />
 <br />
