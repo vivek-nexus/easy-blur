@@ -1,7 +1,7 @@
 chrome.runtime.onInstalled.addListener(function () {
     chrome.contextMenus.create({
         id: "injectScript",
-        title: "Easy blur",
+        title: "Easy Blur",
         contexts: ["page"]
     });
 });
