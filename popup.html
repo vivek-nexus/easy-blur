@@ -17,6 +17,10 @@
         img {
             border-radius: 96px;
         }
+
+        hr {
+            margin: 1rem 0rem;
+        }
     </style>
 </head>
 
@@ -31,7 +35,9 @@
         <li>Right click on any page</li>
         <li>Choose Easy Blur</li>
     </ul>
-    <p id="message"></p>
+    <hr />
+    <input type="range" name="" id="blur-amount-input" step="1" min="0" max="20" />
+    <p id="blur-amount-value"></p>
 
     <script src="popup.js"></script>
 </body>
