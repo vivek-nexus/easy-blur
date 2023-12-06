@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "Easy blur",
+    "version": "1.0",
+    "description": "Blur parts of a web page, before taking screenshots or screen recordings",
+    "permissions": [
+        "activeTab",
+        "storage"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "images/icon.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ]
+}
