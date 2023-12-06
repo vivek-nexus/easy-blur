@@ -21,3 +21,8 @@ Coming soon to Chrome store. Load extension in unpacked form until then please!
 - Download [extension.zip](https://github.com/yakshaG/easy-blur/archive/refs/heads/main.zip)
 - Extract the files as a directory (folder)
 - Follow the instructions here to load the unpacked extension from the extracted directory [https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked)
+
+
+# Testing credits
+Thanks people!
+1. Roshni
