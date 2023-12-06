@@ -36,10 +36,16 @@ Change blur settings by opening the extension using the puzzle icon.
                 filter: blur(${blurIntensity}px)!important;
                 }
     
-                .highlight-element{
+                .highlight-blurred-element{
                     border: 4px red solid!important;
                     filter: blur(0px)!important
-                }`;
+                }
+                
+                .highlight-unblurred-element{
+                    border: 4px red solid!important;
+                    filter: blur(${blurIntensity}px)!important;
+                }
+                `;
 
         if (existingStyleTag) {
             existingStyleTag.textContent += newStyles;
@@ -74,15 +80,22 @@ Change blur settings by opening the extension using the puzzle icon.
 
         function DocMouseOver(event) {
             const target = event.target;
+            const isElementBlurred = target.classList.contains("blur-element")
 
             // Check if the target is an element (not a text node or something else)
             if (target.nodeType === 1) {
                 target.setAttribute("target-element", "true")
-                target.classList.add("highlight-element")
+                if (isElementBlurred)
+                    target.classList.add("highlight-blurred-element")
+                else
+                    target.classList.add("highlight-unblurred-element")
 
                 target.addEventListener("mouseout", () => {
                     target.removeAttribute("target-element")
-                    target.classList.remove("highlight-element")
+                    if (isElementBlurred)
+                        target.classList.remove("highlight-blurred-element")
+                    else
+                        target.classList.remove("highlight-unblurred-element")
                 })
             }
         }
