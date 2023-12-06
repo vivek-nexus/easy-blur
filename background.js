@@ -37,7 +37,7 @@ Change blur settings by opening the extension using the puzzle icon.
                 }
     
                 .highlight-element{
-                    border: 1px red solid!important;
+                    border: 4px red solid!important;
                     filter: blur(0px)!important
                 }`;
 

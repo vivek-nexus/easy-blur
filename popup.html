@@ -6,8 +6,30 @@
     <title>Copy confidential email</title>
     <style>
         body {
-            width: 360px;
+            width: 280px;
             padding: 1.5rem;
+            text-align: center;
+            background: #DCE35B;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #45B649, #DCE35B);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #45B649, #DCE35B);
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        h3 {
+            font-weight: normal;
+            margin-bottom: 2rem;
+        }
+
+        #get-started {
+            padding: 0.25rem 0.5rem;
+            background-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(4px);
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            font-size: medium;
         }
 
         ul {
@@ -20,6 +42,17 @@
 
         hr {
             margin: 1rem 0rem;
+            border-color: green;
+        }
+
+        input {
+            accent-color: green;
+            width: 100%;
+        }
+
+        #blur-amount-value {
+            text-align: center;
+            margin-bottom: 1.5rem;
         }
     </style>
 </head>
@@ -28,16 +61,21 @@
     <div>
         <img src="./images/icon.png" width="48px" height="48px" alt="" />
     </div>
-    <h2>Easy blur </h2>
+    <h2>Easy Blur </h2>
     <h3>Blur parts of a web page, before taking screenshots or screen recordings</h3>
-    <p>To get started,</p>
-    <ul>
-        <li>Right click on any page</li>
-        <li>Choose Easy Blur</li>
-    </ul>
-    <hr />
+    <div id="get-started">
+        <p>To get started,</p>
+        <ul>
+            <li>Right click on any page</li>
+            <li>Choose Easy Blur</li>
+        </ul>
+    </div>
+    <!-- <hr /> -->
     <input type="range" name="" id="blur-amount-input" step="1" min="0" max="20" />
     <p id="blur-amount-value"></p>
+    <div>
+        <a href="https://github.com/yakshaG/easy-blur#readme" target="_blank">Help</a>
+    </div>
 
     <script src="popup.js"></script>
 </body>
