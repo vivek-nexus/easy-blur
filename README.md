@@ -11,4 +11,9 @@ Blur confidential or sensitive parts of a web page, before taking a screenshot o
 <br />
 
 # Installation
-Coming soon to Chrome store
+Coming soon to Chrome store. Load extension in unpacked form until then please!
+
+### How to load unpacked extension
+- Download [extension.zip](https://github.com/yakshaG/easy-blur/archive/refs/heads/main.zip)
+- Extract the files as a directory (folder)
+- Follow the instructions here to load the unpacked extension from the extracted directory [https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked)
