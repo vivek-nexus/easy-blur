@@ -16,15 +16,25 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
 });
 
 function injectScript() {
-    chrome.storage.local.get(["blurIntensity"]).then((result) => {
-        let blurIntensity = 6;
+    chrome.storage.local.get(["blurIntensity", "blurKey", "unblurKey", "exitKey"]).then((result) => {
+        let blurIntensity = 6
+        let blurKey = "b"
+        let unblurKey = "u"
+        let exitKey = "q"
+
         if (result.blurIntensity)
             blurIntensity = result.blurIntensity
+        if (result.blurKey)
+            blurKey = result.blurKey
+        if (result.unblurKey)
+            unblurKey = result.unblurKey
+        if (result.exitKey)
+            exitKey = result.exitKey
 
         const existingStyleTag = document.querySelector('style[data-extension-styles]');
         const newStyles = `
                 .blur-element {
-                filter: blur(${blurIntensity}px)!important;
+                    filter: blur(${blurIntensity}px)!important;
                 }
     
                 .highlight-blurred-element{
@@ -65,7 +75,7 @@ function injectScript() {
         const html = document.querySelector("html")
         const customCursor = document.createElement("div");
         const customCursorText = document.createElement("p")
-        const defaultHelpText = `<span>👉 Press <b>"b"</b> to lock blur <br /> 👉 Press <b>"u"</b> to unlock blur <br /> 👉 Press <b>"Esc"</b> to exit<span>`
+        const defaultHelpText = `<span>👉 Press <b>"${blurKey}"</b> to lock blur <br /> 👉 Press <b>"${unblurKey}"</b> to unlock blur <br /> 👉 Press <b>"${exitKey}"</b> to exit<span>`
         customCursor.append(customCursorText)
         html.append(customCursor)
 
@@ -88,10 +98,10 @@ function injectScript() {
         })
         chrome.storage.onChanged.addListener(function (changes, namespace) {
             for (let key in changes) {
-                if (key === "blurIntensity") {
-                    clearHoverMode()
-                    return
-                }
+                // if (key === "blurIntensity") {
+                clearHoverMode()
+                return
+                // }
             }
         });
 
@@ -129,7 +139,7 @@ function injectScript() {
         }
 
         function DocBlurKey(event) {
-            if (event.key === "b") {
+            if (event.key === blurKey) {
                 const elementToLock = document.querySelector("[target-element='true']")
                 elementToLock.classList.add("blur-element")
                 customCursorText.innerHTML = "Blur locked until next refresh!"
@@ -140,7 +150,7 @@ function injectScript() {
         }
 
         function DocUnblurKey(event) {
-            if (event.key === "u") {
+            if (event.key === unblurKey) {
                 const elementToLock = document.querySelector("[target-element='true']")
                 elementToLock.classList.remove("blur-element")
                 customCursorText.innerHTML = "Blur unlocked until next refresh!"
@@ -151,7 +161,7 @@ function injectScript() {
         }
 
         function exitHoverMode(event) {
-            if (event.key === "Escape") {
+            if (event.key === exitKey) {
                 document.removeEventListener("mousemove", MoveHelpText)
                 customCursor.remove()
                 document.removeEventListener("mouseover", DocMouseOver)

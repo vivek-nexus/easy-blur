@@ -3,27 +3,24 @@
 <html>
 
 <head>
-    <title>Copy confidential email</title>
+    <title>Easy Blur</title>
     <style>
         body {
-            width: 280px;
-            padding: 1.5rem;
-            text-align: center;
+            width: 600px;
+            padding: 1rem;
             background: #DCE35B;
             /* fallback for old browsers */
             background: -webkit-linear-gradient(to right, #45B649, #DCE35B);
             /* Chrome 10-25, Safari 5.1-6 */
             background: linear-gradient(to right, #45B649, #DCE35B);
             /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 3rem;
         }
 
-        h3 {
-            font-weight: normal;
-            margin-bottom: 2rem;
-        }
-
-        #get-started {
-            padding: 0.25rem 0.5rem;
+        .get-started {
+            padding: 0.5rem 1rem;
             background-color: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(4px);
             border-radius: 4px;
@@ -40,41 +37,88 @@
             border-radius: 96px;
         }
 
-        hr {
-            margin: 1rem 0rem;
-            border-color: green;
-        }
-
-        input {
+        #blur-intensity {
             accent-color: green;
             width: 100%;
         }
 
-        #blur-amount-value {
+        .customise-shortcuts {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .label {
+            margin: 0px;
+            margin-bottom: 0.25rem;
+        }
+
+        .text-input {
+            padding: 0.5rem;
+            border: 2px solid green;
+            width: 3.5rem;
             text-align: center;
-            margin-bottom: 1.5rem;
+            font-size: medium;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            color: green;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: blue;
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
     <div>
-        <img src="./images/icon.png" width="48px" height="48px" alt="" />
+        <div style="text-align: center;">
+            <div>
+                <img src="./images/icon.png" width="48px" height="48px" alt="" />
+            </div>
+            <h2>Easy Blur </h2>
+            <h3 style="font-weight: normal;">Blur parts of a web page, before taking screenshots or screen recordings
+            </h3>
+        </div>
+        <div class="get-started">
+            <h3>How to use Easy Blur?</h3>
+            <ul>
+                <li>Right click on any page</li>
+                <li>Choose Easy Blur</li>
+            </ul>
+        </div>
     </div>
-    <h2>Easy Blur </h2>
-    <h3>Blur parts of a web page, before taking screenshots or screen recordings</h3>
-    <div id="get-started">
-        <ul>
-            <li>Right click on any page</li>
-            <li>Choose Easy Blur</li>
-        </ul>
-    </div>
-    <!-- <hr /> -->
-    <input type="range" name="" id="blur-amount-input" step="1" min="0" max="20" />
-    <p id="blur-amount-value"></p>
     <div>
-        <a href="https://github.com/yakshaG/easy-blur#readme" target="_blank">Help</a>
+        <h3>Customise blur intensity</h3>
+        <div style="margin-bottom: 3rem;">
+            <p id="blur-amount-value" class="label"></p>
+            <input type="range" name="" id="blur-intensity" step="1" min="0" max="20" />
+        </div>
+        <h3>Customise shortcuts</h3>
+        <div class="customise-shortcuts" style="margin-bottom: 2rem;">
+            <div class="input-group">
+                <p class="label">Lock blur</p>
+                <input type="text" id="blur-shortcut" class="text-input" maxlength="1" />
+            </div>
+            <div class="input-group">
+                <p class="label">Unlock blur</p>
+                <input type="text" id="unblur-shortcut" class="text-input" maxlength="1" />
+            </div>
+            <div class="input-group">
+                <p class="label">Stop selecting</p>
+                <input type="text" id="exit-shortcut" class="text-input" maxlength="1" />
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <a href="https://github.com/yakshaG/easy-blur#readme" target="_blank">Help</a>
+        </div>
     </div>
+
+
 
     <script src="popup.js"></script>
 </body>
