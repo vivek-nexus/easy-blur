@@ -16,15 +16,6 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
 });
 
 function injectScript() {
-    alert(`Easy blur hover mode is active
-
-    • Hover over an element 
-    • Press "b" to blur, "u" to unblur
-    • Press "Esc" to stop selecting
-    
-Change blur settings by opening the extension using the puzzle icon.
-    `)
-
     chrome.storage.local.get(["blurIntensity"]).then((result) => {
         let blurIntensity = 6;
         if (result.blurIntensity)
@@ -43,7 +34,21 @@ Change blur settings by opening the extension using the puzzle icon.
                 
                 .highlight-unblurred-element{
                     border: 4px red solid!important;
-                    filter: blur(${blurIntensity}px)!important;
+                    // filter: blur(${blurIntensity}px)!important;
+                }
+
+                .custom-cursor{
+                    position: fixed;
+                    padding: 1rem;
+                    background-color: rgba(255,255,255,0.3);
+                    backdrop-filter: blur(16px);
+                    z-index: 1000;
+                    border-radius: 16px;
+                    box-shadow: 0px 0px 24px 2px rgba(0,0,0, 0.25);
+                }
+
+                .custom-cursor-text{
+                    margin: 0px;
                 }
                 `;
 
@@ -56,7 +61,21 @@ Change blur settings by opening the extension using the puzzle icon.
             document.head.appendChild(style);
         }
 
+        //custom cursor help text
+        const html = document.querySelector("html")
+        const customCursor = document.createElement("div");
+        const customCursorText = document.createElement("p")
+        const defaultHelpText = `<span>👉 Press <b>"b"</b> to lock blur <br /> 👉 Press <b>"u"</b> to unlock blur <br /> 👉 Press <b>"Esc"</b> to exit<span>`
+        customCursor.append(customCursorText)
+        html.append(customCursor)
+
+        customCursor.classList.add("custom-cursor")
+        customCursorText.classList.add("custom-cursor-text")
+        customCursorText.innerHTML = defaultHelpText
+
+
         // Start blurring in response to various events
+        document.addEventListener("mousemove", MoveHelpText)
         document.addEventListener("mouseover", DocMouseOver);
         document.addEventListener("keydown", DocBlurKey)
         document.addEventListener("keydown", DocUnblurKey)
@@ -100,11 +119,23 @@ Change blur settings by opening the extension using the puzzle icon.
             }
         }
 
+        function MoveHelpText(event) {
+            // move the instruction with cursor
+            const x = event.clientX;
+            const y = event.clientY;
+
+            customCursor.style.left = x + 12 + 'px';
+            customCursor.style.top = y + 12 + 'px';
+        }
+
         function DocBlurKey(event) {
             if (event.key === "b") {
                 const elementToLock = document.querySelector("[target-element='true']")
                 elementToLock.classList.add("blur-element")
-                alert("Blur successfully locked, until next page refresh")
+                customCursorText.innerHTML = "Blur locked until next refresh!"
+                setTimeout(() => {
+                    customCursorText.innerHTML = defaultHelpText
+                }, 2500);
             }
         }
 
@@ -112,12 +143,17 @@ Change blur settings by opening the extension using the puzzle icon.
             if (event.key === "u") {
                 const elementToLock = document.querySelector("[target-element='true']")
                 elementToLock.classList.remove("blur-element")
-                alert("Blur successfully unlocked, until next page refresh")
+                customCursorText.innerHTML = "Blur unlocked until next refresh!"
+                setTimeout(() => {
+                    customCursorText.innerHTML = defaultHelpText
+                }, 2500);
             }
         }
 
         function exitHoverMode(event) {
             if (event.key === "Escape") {
+                document.removeEventListener("mousemove", MoveHelpText)
+                customCursor.remove()
                 document.removeEventListener("mouseover", DocMouseOver)
                 document.removeEventListener("keydown", DocBlurKey)
                 document.removeEventListener("keydown", DocUnblurKey)
@@ -125,6 +161,8 @@ Change blur settings by opening the extension using the puzzle icon.
         }
 
         function clearHoverMode() {
+            document.removeEventListener("mousemove", MoveHelpText)
+            customCursor.remove()
             document.removeEventListener("mouseover", DocMouseOver)
             document.removeEventListener("keydown", DocBlurKey)
             document.removeEventListener("keydown", DocUnblurKey)
