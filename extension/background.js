@@ -75,7 +75,7 @@ function injectScript() {
         const html = document.querySelector("html")
         const customCursor = document.createElement("div");
         const customCursorText = document.createElement("p")
-        const defaultHelpText = `<span>👉 Press <b>"${blurKey}"</b> to lock blur <br /> 👉 Press <b>"${unblurKey}"</b> to unlock blur <br /> 👉 Press <b>"${exitKey}"</b> to exit<span>`
+        const defaultHelpText = `<span>👉 Press <b>"${blurKey}"</b> to lock blur <br /> 👉 Press <b>"${unblurKey}"</b> to unlock blur <br /> 👉 Press <b>"${exitKey}"</b> to stop selecting<span>`
         customCursor.append(customCursorText)
         html.append(customCursor)
 
