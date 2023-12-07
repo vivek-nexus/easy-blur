@@ -15,12 +15,9 @@ keywords: `blur-video`, `blur-photo`, `video-editing`, `photo-editing`, `post-pr
 <br />
 
 # Installation
-Coming soon to Chrome store. Load extension in unpacked form until then please!
-
-### How to load unpacked extension
-- Download [extension.zip](https://github.com/yakshaG/easy-blur/archive/refs/heads/main.zip)
-- Extract the files as a directory (folder)
-- Follow the instructions here to load the unpacked extension from the extracted directory [https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked)
+<a href="https://chromewebstore.google.com/detail/easy-blur/bilpfoldmicnjhdopaebihhiddkcickp" target="_blank">
+<img src="https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/iNEddTyWiMfLSwFD6qGq.png" />
+</a>
 
 <br />
 <br />
@@ -29,3 +26,4 @@ Coming soon to Chrome store. Load extension in unpacked form until then please!
 # Testing credits
 Thanks people!
 1. Roshni Nayak
+2. Adithi
