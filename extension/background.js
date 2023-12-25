@@ -38,13 +38,24 @@ function injectScript() {
                 }
     
                 .highlight-blurred-element{
-                    border: 4px red solid!important;
-                    filter: blur(0px)!important
+                    filter: blur(0px)!important;
+                    position: relative;
                 }
                 
-                .highlight-unblurred-element{
-                    border: 4px red solid!important;
-                    // filter: blur(${blurIntensity}px)!important;
+                 .highlight-unblurred-element {
+                    position: relative;
+                }
+
+                .highlight-unblurred-element::before, .highlight-blurred-element::before {
+                    content: "";
+                    position: absolute;
+                    top: -1px;
+                    right: -1px;
+                    bottom: -1px;
+                    left: -1px;
+                    border: 2px red solid;
+                    filter: blur(0px);
+                    pointer-events: none; 
                 }
 
                 .custom-cursor{
