@@ -38,12 +38,12 @@ function injectScript() {
                 }
     
                 .highlight-blurred-element{
-                    outline: red solid 4px;
+                    outline: red solid 4px!important;
                     filter: blur(0px)!important;
                 }
                 
                  .highlight-unblurred-element {
-                    outline: red solid 4px;
+                    outline: red solid 4px!important;
                 }
 
                 .custom-cursor{
