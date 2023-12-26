@@ -39,24 +39,25 @@ function injectScript() {
     
                 .highlight-blurred-element{
                     filter: blur(0px)!important;
-                    position: relative;
+                    // position: relative;
                 }
                 
                  .highlight-unblurred-element {
-                    position: relative;
+                    // position: relative;
+                    outline: #f00 solid 2px;
                 }
 
-                .highlight-unblurred-element::before, .highlight-blurred-element::before {
-                    content: "";
-                    position: absolute;
-                    top: -1px;
-                    right: -1px;
-                    bottom: -1px;
-                    left: -1px;
-                    border: 2px red solid;
-                    filter: blur(0px);
-                    pointer-events: none; 
-                }
+                // .highlight-unblurred-element::before, .highlight-blurred-element::before {
+                //     content: "";
+                //     position: absolute;
+                //     top: -1px;
+                //     right: -1px;
+                //     bottom: -1px;
+                //     left: -1px;
+                //     border: 2px red solid;
+                //     filter: blur(0px);
+                //     pointer-events: none; 
+                // }
 
                 .custom-cursor{
                     position: fixed;
