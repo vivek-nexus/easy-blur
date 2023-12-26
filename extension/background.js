@@ -38,13 +38,12 @@ function injectScript() {
                 }
     
                 .highlight-blurred-element{
-                    border: 4px red solid!important;
-                    filter: blur(0px)!important
+                    outline: red solid 4px!important;
+                    filter: blur(0px)!important;
                 }
                 
-                .highlight-unblurred-element{
-                    border: 4px red solid!important;
-                    // filter: blur(${blurIntensity}px)!important;
+                 .highlight-unblurred-element {
+                    outline: red solid 4px!important;
                 }
 
                 .custom-cursor{
@@ -97,12 +96,8 @@ function injectScript() {
             return
         })
         chrome.storage.onChanged.addListener(function (changes, namespace) {
-            for (let key in changes) {
-                // if (key === "blurIntensity") {
-                clearHoverMode()
-                return
-                // }
-            }
+            clearHoverMode()
+            return
         });
 
 
