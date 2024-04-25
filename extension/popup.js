@@ -10,7 +10,7 @@ blurKey.value = "b"
 unblurKey.value = "u"
 exitKey.value = "q"
 
-blurAmountValue.textContent = ` Blur intensity: 6 px`
+blurAmountValue.textContent = `Blur intensity: 6 px`
 
 
 chrome.storage.local.get(["blurIntensity", "blurKey", "unblurKey", "exitKey"]).then((result) => {
