@@ -3,8 +3,8 @@ chrome.runtime.onInstalled.addListener(function () {
         id: "injectScript",
         title: "Easy Blur",
         contexts: ["page"]
-    });
-});
+    })
+})
 
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     if (info.menuItemId === "injectScript") {
@@ -13,15 +13,17 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
             function: injectScript
         });
     }
-});
+})
 
 function injectScript() {
     chrome.storage.local.get(["blurIntensity", "blurKey", "unblurKey", "exitKey"]).then((result) => {
+        //default values
         let blurIntensity = 6
         let blurKey = "b"
         let unblurKey = "u"
         let exitKey = "q"
 
+        //read from chrome storage, if available
         if (result.blurIntensity)
             blurIntensity = result.blurIntensity
         if (result.blurKey)
@@ -31,8 +33,14 @@ function injectScript() {
         if (result.exitKey)
             exitKey = result.exitKey
 
-        const existingStyleTag = document.querySelector('style[data-extension-styles]');
+        //style sheet for blur, unblur, custom cursor help text
+        const existingStyleTag = document.querySelector('style[easy-blur-styles]');
         const newStyles = `
+                @font-face {
+                    font-family: Sora;
+                    src: url("fonts/Sora_Variable.ttf") format("truetype");
+                }
+
                 .blur-element {
                     filter: blur(${blurIntensity}px)!important;
                 }
@@ -58,6 +66,10 @@ function injectScript() {
 
                 .custom-cursor-text{
                     margin: 0px;
+                    font-size: max(1rem, 16px);
+                    font-family: "Sora", sans-serif;
+                    line-height: 150%;
+                    
                 }
                 `;
 
@@ -66,7 +78,7 @@ function injectScript() {
         } else {
             const style = document.createElement('style');
             style.textContent = newStyles;
-            style.setAttribute('data-extension-styles', ''); // Add a data attribute for identification
+            style.setAttribute('easy-blur-styles', ''); // Add a data attribute for identification
             document.head.appendChild(style);
         }
 
@@ -74,7 +86,7 @@ function injectScript() {
         const html = document.querySelector("html")
         const customCursor = document.createElement("div");
         const customCursorText = document.createElement("p")
-        const defaultHelpText = `<span>👉 Press <b>"${blurKey}"</b> to lock blur <br /> 👉 Press <b>"${unblurKey}"</b> to unlock blur <br /> 👉 Press <b>"${exitKey}"</b> to stop selecting<span>`
+        const defaultHelpText = `<span>Hover over any element you want to modify, <br /> 👉 Press <b>"${blurKey}"</b> to blur <br /> 👉 Press <b>"${unblurKey}"</b> to unblur<br /> 👉 Press <b>"${exitKey}"</b> to stop hovering<span>`
         customCursor.append(customCursorText)
         html.append(customCursor)
 
@@ -83,25 +95,34 @@ function injectScript() {
         customCursorText.innerHTML = defaultHelpText
 
 
-        // Start blurring in response to various events
+        // Move help text with mouse
         document.addEventListener("mousemove", MoveHelpText)
+        // Mark hovered element
         document.addEventListener("mouseover", DocMouseOver);
+        // Blur marked element on keypress
         document.addEventListener("keydown", DocBlurKey)
+        // Unblur marked element on keypress
         document.addEventListener("keydown", DocUnblurKey)
 
-        //Stop blurring in response to various events
-        document.addEventListener("keydown", exitHoverMode)
+        //Stop blurring when exit key is pressed
+        document.addEventListener("keydown", (e) => {
+            if (e.key === exitKey) {
+                ClearEventListeners()
+            }
+        })
+        //Stop blurring when right click is invoked
         document.addEventListener("contextmenu", () => {
-            clearHoverMode()
+            ClearEventListeners()
             return
         })
+        //Stop blurring when settings are hot updated in chrome storage
         chrome.storage.onChanged.addListener(function (changes, namespace) {
-            clearHoverMode()
+            ClearEventListeners()
             return
         });
 
 
-
+        // higlight hovered element
         function DocMouseOver(event) {
             const target = event.target;
             const isElementBlurred = target.classList.contains("blur-element")
@@ -124,8 +145,8 @@ function injectScript() {
             }
         }
 
+        // move help text with cursor
         function MoveHelpText(event) {
-            // move the instruction with cursor
             const x = event.clientX;
             const y = event.clientY;
 
@@ -133,10 +154,11 @@ function injectScript() {
             customCursor.style.top = y + 12 + 'px';
         }
 
+        // Blur the element marked with the attribute, by DocMouseOver function
         function DocBlurKey(event) {
             if (event.key === blurKey) {
-                const elementToLock = document.querySelector("[target-element='true']")
-                elementToLock.classList.add("blur-element")
+                const elementToBlur = document.querySelector("[target-element='true']")
+                elementToBlur.classList.add("blur-element")
                 customCursorText.innerHTML = "Blur locked until next refresh!"
                 setTimeout(() => {
                     customCursorText.innerHTML = defaultHelpText
@@ -144,10 +166,11 @@ function injectScript() {
             }
         }
 
+        // Unblur the element marked with the attribute, by DocMouseOver function
         function DocUnblurKey(event) {
             if (event.key === unblurKey) {
-                const elementToLock = document.querySelector("[target-element='true']")
-                elementToLock.classList.remove("blur-element")
+                const elementToUnblur = document.querySelector("[target-element='true']")
+                elementToUnblur.classList.remove("blur-element")
                 customCursorText.innerHTML = "Blur unlocked until next refresh!"
                 setTimeout(() => {
                     customCursorText.innerHTML = defaultHelpText
@@ -155,17 +178,8 @@ function injectScript() {
             }
         }
 
-        function exitHoverMode(event) {
-            if (event.key === exitKey) {
-                document.removeEventListener("mousemove", MoveHelpText)
-                customCursor.remove()
-                document.removeEventListener("mouseover", DocMouseOver)
-                document.removeEventListener("keydown", DocBlurKey)
-                document.removeEventListener("keydown", DocUnblurKey)
-            }
-        }
-
-        function clearHoverMode() {
+        // Remove custom text, highlighter, blur, unblur event listeners and custom text element
+        function ClearEventListeners() {
             document.removeEventListener("mousemove", MoveHelpText)
             customCursor.remove()
             document.removeEventListener("mouseover", DocMouseOver)

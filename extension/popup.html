@@ -5,18 +5,35 @@
 <head>
     <title>Easy Blur</title>
     <style>
+        @font-face {
+            font-family: Sora;
+            src: url("fonts/Sora_Variable.ttf") format("truetype");
+        }
+
         body {
             width: 600px;
             padding: 1rem;
             background: #DCE35B;
             /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #45B649, #DCE35B);
+            background: -webkit-linear-gradient(to top, #45B649, #DCE35B);
             /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #45B649, #DCE35B);
+            background: linear-gradient(to top, #45B649, #DCE35B);
             /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 3rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin: 0px;
+        }
+
+        .logo-title {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding-top: 0.75rem;
         }
 
         .get-started {
@@ -26,7 +43,7 @@
             border-radius: 4px;
             margin-bottom: 1.5rem;
             text-align: left;
-            font-size: medium;
+            font-size: 1rem;
         }
 
         ul {
@@ -76,18 +93,18 @@
 
 <body>
     <div>
-        <div style="text-align: center;">
-            <div>
-                <img src="./images/icon.png" width="48px" height="48px" alt="" />
+        <div>
+            <div class="logo-title">
+                <img src="./images/icon.png" width="36px" height="36px" alt="" />
+                <h2>Easy Blur</h2>
             </div>
-            <h2>Easy Blur </h2>
             <h3 style="font-weight: normal;">Blur parts of a web page, before taking screenshots or screen recordings
             </h3>
         </div>
         <div class="get-started">
             <h3>How to use Easy Blur?</h3>
             <ul>
-                <li>Right click on any page</li>
+                <li>Right click in empty area of any web page</li>
                 <li>Choose Easy Blur</li>
             </ul>
         </div>
@@ -99,17 +116,17 @@
             <input type="range" name="" id="blur-intensity" step="1" min="0" max="20" />
         </div>
         <h3>Customise shortcuts</h3>
-        <div class="customise-shortcuts" style="margin-bottom: 2rem;">
+        <div class="customise-shortcuts" style="margin-bottom: 0.75rem;">
             <div class="input-group">
-                <p class="label">Lock blur</p>
+                <p class="label">Blur</p>
                 <input type="text" id="blur-shortcut" class="text-input" maxlength="1" />
             </div>
             <div class="input-group">
-                <p class="label">Unlock blur</p>
+                <p class="label">Unblur</p>
                 <input type="text" id="unblur-shortcut" class="text-input" maxlength="1" />
             </div>
             <div class="input-group">
-                <p class="label">Stop selecting</p>
+                <p class="label">Stop hovering</p>
                 <input type="text" id="exit-shortcut" class="text-input" maxlength="1" />
             </div>
         </div>
